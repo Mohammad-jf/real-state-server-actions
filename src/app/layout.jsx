@@ -10,9 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl">
-      <Layout>
-        <body className={yekan.className}>{children}</body>
-      </Layout>
+      <body className={yekan.className}>
+        <Layout>{children}</Layout>
+      </body>
     </html>
   );
 }
