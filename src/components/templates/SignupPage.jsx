@@ -3,6 +3,8 @@ import signup from "src/actions/signup";
 import styles from "./signup.module.css";
 import { useState } from "react";
 import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
+import { ThreeDots } from "react-loader-spinner";
 
 const SignupPage = () => {
   const [formD, setFormD] = useState({
@@ -10,6 +12,8 @@ const SignupPage = () => {
     password: "",
     rePassword: "",
   });
+
+  const [loading, setloading] = useState(false);
 
   const changeHandler = (e) => {
     setFormD({
@@ -19,16 +23,29 @@ const SignupPage = () => {
   };
 
   const submitHandler = async (formData) => {
+    setloading(true);
+    if (!formD.email || !formD.password || !formD.rePassword) {
+      toast.error("اطلاعات را به درستی وارد کنید");
+      setloading(false);
+      return;
+    }
+    if (formD.password !== formD.rePassword) {
+      toast.error("عدم تطابق گذرواژه ها");
+      setloading(false);
+      return;
+    }
+
     const res = await signup(formData);
     if (res?.error) {
-      console.log(res.error);
+      toast.error(res.error);
+      setloading(false);
     }
   };
 
   return (
     <div className={styles.form}>
       <h4>فرم ثبت نام</h4>
-      <form action={submitHandler}>
+      <form action={submitHandler} method="POST">
         <label htmlFor="email">ایمیل</label>
         <input
           type="text"
@@ -53,12 +70,23 @@ const SignupPage = () => {
           id="rePassword"
           onChange={changeHandler}
         />
-        <button type="submit">ایجاد حساب</button>
+        {loading ? (
+          <ThreeDots
+            ariaLabel="three-dots-loading"
+            visible={true}
+            color="#304ffe"
+            height={45}
+            wrapperStyle={{ margin: "auto" }}
+          />
+        ) : (
+          <button type="submit">ایجاد حساب</button>
+        )}
       </form>
       <p>
         حساب کاربری دارید؟؟
         <Link href="/signin">ورود</Link>
       </p>
+      <Toaster />
     </div>
   );
 };
