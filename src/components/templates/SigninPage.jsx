@@ -1,57 +1,60 @@
 "use client";
-import signup from "src/actions/signup";
 import styles from "./signup.module.css";
 import { useState } from "react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import { ThreeDots } from "react-loader-spinner";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const SignupPage = () => {
-  const [formData, setFormData] = useState({
+const SigninPage = () => {
+  const router = useRouter();
+  const [formD, setFormD] = useState({
     email: "",
     password: "",
-    rePassword: "",
   });
 
   const [loading, setloading] = useState(false);
 
   const changeHandler = (e) => {
-    setFormData({
-      ...formData,
+    setFormD({
+      ...formD,
       [e.target.name]: e.target.value,
     });
   };
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     setloading(true);
-    if (!formData.email || !formData.password || !formData.rePassword) {
+    if (!formD.email || !formD.password) {
       toast.error("اطلاعات را به درستی وارد کنید");
       setloading(false);
       return;
     }
-    if (formData.password !== formData.rePassword) {
-      toast.error("عدم تطابق گذرواژه ها");
-      setloading(false);
-      return;
-    }
 
-    const res = await signup(formData);
-    if (res?.error) {
+    const res = await signIn("credentials", {
+      email: formD.email,
+      password: formD.password,
+      redirect: false,
+    });
+
+    if (!res.error) {
+      setloading(false);
+      router.replace("/");
+    } else {
+      setloading(false);
       toast.error(res.error);
-      setloading(false);
     }
-
-    setloading(false);
   };
 
   return (
     <div className={styles.form}>
-      <h4>فرم ثبت نام</h4>
+      <h4>ورود به حساب</h4>
       <form>
         <label htmlFor="email">ایمیل</label>
         <input
           type="text"
-          value={formData.email}
+          value={formD.email}
           name="email"
           id="email"
           onChange={changeHandler}
@@ -59,38 +62,31 @@ const SignupPage = () => {
         <label htmlFor="password">رمز عبور</label>
         <input
           type="password"
-          value={formData.password}
+          value={formD.password}
           name="password"
           id="password"
           onChange={changeHandler}
         />
-        <label htmlFor="rePassword">تکرار رمز عبور</label>
-        <input
-          type="password"
-          value={formData.rePassword}
-          name="rePassword"
-          id="rePassword"
-          onChange={changeHandler}
-        />
+
         {loading ? (
           <ThreeDots
-            ariaLabel="three-dots-loading"
-            visible={true}
             color="#304ffe"
             height={45}
+            ariaLabel="three-dotss-loading"
+            visible={true}
             wrapperStyle={{ margin: "auto" }}
           />
         ) : (
-          <button onClick={submitHandler}>ایجاد حساب</button>
+          <button onClick={submitHandler}>ورود</button>
         )}
       </form>
       <p>
-        حساب کاربری دارید؟؟
-        <Link href="/signin">ورود</Link>
+        حساب کاربری ندارید؟؟
+        <Link href="/signup">ثبت نام</Link>
       </p>
       <Toaster />
     </div>
   );
 };
 
-export default SignupPage;
+export default SigninPage;

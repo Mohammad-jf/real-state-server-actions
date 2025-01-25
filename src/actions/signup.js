@@ -6,9 +6,9 @@ import { redirect } from "next/navigation";
 
 async function signUp(formData) {
   await connectDB();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const repassword = formData.get("rePassword");
+  const email = formData.email;
+  const password = formData.password;
+  const repassword = formData.rePassword;
   if (!email || !password || !repassword) {
     // throw new Error("invalid credentials");
     return { error: "اطلاعات را به درستی وارد کنید" };

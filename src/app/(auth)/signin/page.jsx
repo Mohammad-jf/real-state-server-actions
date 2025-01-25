@@ -1,7 +1,7 @@
-import React from "react";
+import SigninPage from "src/components/templates/SigninPage";
 
 const Signin = () => {
-  return <div>signin</div>;
+  return <SigninPage />;
 };
 
 export default Signin;
