@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 const SigninPage = () => {
   const router = useRouter();
-  const [formD, setFormD] = useState({
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
@@ -17,8 +17,8 @@ const SigninPage = () => {
   const [loading, setloading] = useState(false);
 
   const changeHandler = (e) => {
-    setFormD({
-      ...formD,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
     });
   };
@@ -26,15 +26,15 @@ const SigninPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setloading(true);
-    if (!formD.email || !formD.password) {
+    if (!formData.email || !formData.password) {
       toast.error("اطلاعات را به درستی وارد کنید");
       setloading(false);
       return;
     }
 
     const res = await signIn("credentials", {
-      email: formD.email,
-      password: formD.password,
+      email: formData.email,
+      password: formData.password,
       redirect: false,
     });
 
@@ -54,7 +54,7 @@ const SigninPage = () => {
         <label htmlFor="email">ایمیل</label>
         <input
           type="text"
-          value={formD.email}
+          value={formData.email}
           name="email"
           id="email"
           onChange={changeHandler}
@@ -62,7 +62,7 @@ const SigninPage = () => {
         <label htmlFor="password">رمز عبور</label>
         <input
           type="password"
-          value={formD.password}
+          value={formData.password}
           name="password"
           id="password"
           onChange={changeHandler}

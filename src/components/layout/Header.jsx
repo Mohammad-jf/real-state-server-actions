@@ -3,11 +3,11 @@ import Link from "next/link";
 import styles from "./header.module.css";
 import { FiLogIn } from "react-icons/fi";
 import { FaUserAlt } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 // import { useSession } from "next-auth/react";
 
 const Header = () => {
-  //   const { data } = useSession();
-  let data = true;
+  const { data } = useSession();
 
   return (
     <header className={styles.header}>
