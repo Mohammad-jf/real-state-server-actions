@@ -1,6 +1,7 @@
+import AddPage from "src/components/templates/AddPage";
 
 const Add = () => {
-  return <div></div>;
+  return <AddPage />;
 };
 
 export default Add;
