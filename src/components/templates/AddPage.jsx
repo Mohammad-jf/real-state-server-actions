@@ -3,6 +3,9 @@
 import { useState } from "react";
 import styles from "./addPage.module.css";
 import TextInput from "../modules/TextInput";
+import RadioList from "../modules/RadioList";
+import TextList from "../modules/TextList";
+import CustomDatePicker from "../modules/CustomDatePicker";
 
 const AddPage = () => {
   const [profileData, setProfileData] = useState({
@@ -58,6 +61,25 @@ const AddPage = () => {
         setProfileData={setProfileData}
         name="realState"
         title="بنگاه"
+      />
+
+      <RadioList profileData={profileData} setProfileData={setProfileData} />
+      <TextList
+        title="امکانات رفاهی"
+        profileData={profileData}
+        setProfileData={setProfileData}
+        type="amenities"
+      />
+      <TextList
+        title="قوانین"
+        profileData={profileData}
+        setProfileData={setProfileData}
+        type="rules"
+      />
+
+      <CustomDatePicker
+        profileData={profileData}
+        setProfileData={setProfileData}
       />
 
       <button className={styles.submit} onClick={submitHandler}>
