@@ -40,8 +40,8 @@ const RadioList = ({ profileData, setProfileData }) => {
             type="radio"
             id="shop"
             name="category"
-            value="shop"
-            checked={profileData.category === "shop"}
+            value="store"
+            checked={profileData.category === "store"}
             onChange={changeHandler}
           />
         </div>

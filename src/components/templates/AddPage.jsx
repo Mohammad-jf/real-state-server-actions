@@ -1,18 +1,19 @@
 "use client";
-
 import { useState } from "react";
 import styles from "./addPage.module.css";
 import TextInput from "../modules/TextInput";
 import RadioList from "../modules/RadioList";
 import TextList from "../modules/TextList";
 import CustomDatePicker from "../modules/CustomDatePicker";
+import { toast, Toaster } from "react-hot-toast";
+import createProfile from "src/actions/createProfile";
 
 const AddPage = () => {
   const [profileData, setProfileData] = useState({
     title: "",
     description: "",
     location: "",
-    phone: "",
+    phoneNumber: "",
     price: "",
     realState: "",
     constructionDate: new Date(),
@@ -21,7 +22,27 @@ const AddPage = () => {
     amenities: [],
   });
 
-  const submitHandler = async () => {};
+  const submitHandler = async () => {
+    const res = await createProfile(profileData);
+    if (res.error) {
+      toast.error(res.error);
+    } else if (res.message) {
+      toast.success(res.message);
+    }
+
+    setProfileData({
+      title: "",
+      description: "",
+      location: "",
+      phone: "",
+      price: "",
+      realState: "",
+      constructionDate: new Date(),
+      category: "",
+      rules: [],
+      amenities: [],
+    });
+  };
   return (
     <div className={styles.container}>
       <h3>ثبت آگهی</h3>
@@ -47,7 +68,7 @@ const AddPage = () => {
       <TextInput
         profileData={profileData}
         setProfileData={setProfileData}
-        name="phone"
+        name="phoneNumber"
         title="شماره همراه"
       />
       <TextInput
@@ -85,6 +106,7 @@ const AddPage = () => {
       <button className={styles.submit} onClick={submitHandler}>
         ثبت آگهی
       </button>
+      <Toaster />
     </div>
   );
 };

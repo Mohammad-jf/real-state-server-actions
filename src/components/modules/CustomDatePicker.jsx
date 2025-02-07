@@ -6,7 +6,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 
 const CustomDatePicker = ({ profileData, setProfileData }) => {
   const changeHandler = (e) => {
-    const date = new Date();
+    const date = new Date(e);
     setProfileData({
       ...profileData,
       constructionDate: date,
@@ -20,7 +20,7 @@ const CustomDatePicker = ({ profileData, setProfileData }) => {
         locale={persian_fa}
         calendarPosition="bottom-right"
         value={profileData.constructionDate}
-        onChange={() => changeHandler(e)}
+        onChange={changeHandler}
       />
     </div>
   );
