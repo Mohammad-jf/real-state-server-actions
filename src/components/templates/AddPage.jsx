@@ -39,7 +39,7 @@ const AddPage = () => {
       title: "",
       description: "",
       location: "",
-      phone: "",
+      phoneNumber: "",
       price: "",
       realState: "",
       constructionDate: new Date(),
