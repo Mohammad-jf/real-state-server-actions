@@ -4,7 +4,7 @@ import styles from "./signup.module.css";
 import { useState } from "react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
-import { ThreeDots } from "react-loader-spinner";
+import Loader from "../modules/Loader";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -73,13 +73,7 @@ const SignupPage = () => {
           onChange={changeHandler}
         />
         {loading ? (
-          <ThreeDots
-            ariaLabel="three-dots-loading"
-            visible={true}
-            color="#304ffe"
-            height={45}
-            wrapperStyle={{ margin: "auto" }}
-          />
+          <Loader />
         ) : (
           <button onClick={submitHandler}>ایجاد حساب</button>
         )}

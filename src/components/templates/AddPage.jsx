@@ -7,6 +7,7 @@ import TextList from "../modules/TextList";
 import CustomDatePicker from "../modules/CustomDatePicker";
 import { toast, Toaster } from "react-hot-toast";
 import createProfile from "src/actions/createProfile";
+import Loader from "../modules/Loader";
 
 const AddPage = () => {
   const [profileData, setProfileData] = useState({
@@ -108,13 +109,7 @@ const AddPage = () => {
       />
 
       {loading ? (
-        <ThreeDots
-          color="#304ffe"
-          height={45}
-          ariaLabel="three-dotss-loading"
-          visible={true}
-          wrapperStyle={{ margin: "auto" }}
-        />
+        <Loader />
       ) : (
         <button className={styles.submit} onClick={submitHandler}>
           ثبت آگهی

@@ -3,9 +3,9 @@ import styles from "./signup.module.css";
 import { useState } from "react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
-import { ThreeDots } from "react-loader-spinner";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Loader from "../modules/Loader";
 
 const SigninPage = () => {
   const router = useRouter();
@@ -68,17 +68,7 @@ const SigninPage = () => {
           onChange={changeHandler}
         />
 
-        {loading ? (
-          <ThreeDots
-            color="#304ffe"
-            height={45}
-            ariaLabel="three-dotss-loading"
-            visible={true}
-            wrapperStyle={{ margin: "auto" }}
-          />
-        ) : (
-          <button onClick={submitHandler}>ورود</button>
-        )}
+        {loading ? <Loader /> : <button onClick={submitHandler}>ورود</button>}
       </form>
       <p>
         حساب کاربری ندارید؟؟
