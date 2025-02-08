@@ -21,13 +21,17 @@ const AddPage = () => {
     rules: [],
     amenities: [],
   });
+  const [loading, setloading] = useState(false);
 
   const submitHandler = async () => {
+    setloading(true);
     const res = await createProfile(profileData);
     if (res.error) {
       toast.error(res.error);
+      setloading(false);
     } else if (res.message) {
       toast.success(res.message);
+      setloading(false);
     }
 
     setProfileData({
@@ -103,9 +107,19 @@ const AddPage = () => {
         setProfileData={setProfileData}
       />
 
-      <button className={styles.submit} onClick={submitHandler}>
-        ثبت آگهی
-      </button>
+      {loading ? (
+        <ThreeDots
+          color="#304ffe"
+          height={45}
+          ariaLabel="three-dotss-loading"
+          visible={true}
+          wrapperStyle={{ margin: "auto" }}
+        />
+      ) : (
+        <button className={styles.submit} onClick={submitHandler}>
+          ثبت آگهی
+        </button>
+      )}
       <Toaster />
     </div>
   );
