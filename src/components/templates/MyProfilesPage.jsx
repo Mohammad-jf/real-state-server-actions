@@ -9,10 +9,15 @@ const MyProfilesPage = ({ profiles }) => {
       )}
 
       {profiles.map((profile) => (
-        <DashboardCard key={profile._id} profile={profile} />
+        <DashboardCard
+          key={profile._id}
+          profile={JSON.parse(JSON.stringify(profile))}
+        />
       ))}
     </div>
   );
 };
 
 export default MyProfilesPage;
+
+

@@ -8,20 +8,26 @@ import CustomDatePicker from "../modules/CustomDatePicker";
 import { toast, Toaster } from "react-hot-toast";
 import createProfile from "src/actions/createProfile";
 import Loader from "../modules/Loader";
+import editProfile from "src/actions/editProfile";
 
-const AddPage = () => {
-  const [profileData, setProfileData] = useState({
-    title: "",
-    description: "",
-    location: "",
-    phoneNumber: "",
-    price: "",
-    realState: "",
-    constructionDate: new Date(),
-    category: "",
-    rules: [],
-    amenities: [],
-  });
+const AddPage = ({ data }) => {
+  const [profileData, setProfileData] = useState(
+    data
+      ? { ...data }
+      : {
+          title: "",
+          description: "",
+          location: "",
+          phoneNumber: "",
+          price: "",
+          realState: "",
+          constructionDate: new Date(),
+          category: "",
+          rules: [],
+          amenities: [],
+        }
+  );
+
   const [loading, setloading] = useState(false);
 
   const submitHandler = async () => {
@@ -48,9 +54,22 @@ const AddPage = () => {
       amenities: [],
     });
   };
+
+  const editHandler = async () => {
+    setloading(true);
+    const res = await editProfile({ ...profileData });
+    if (res.error) {
+      toast.error(res.error);
+      setloading(false);
+    } else if (res.message) {
+      toast.success(res.message);
+      setloading(false);
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <h3>ثبت آگهی</h3>
+      <h3>{data ? "ویرایش آگهی" : "ثبت آگهی"}</h3>
       <TextInput
         profileData={profileData}
         setProfileData={setProfileData}
@@ -110,6 +129,10 @@ const AddPage = () => {
 
       {loading ? (
         <Loader />
+      ) : data ? (
+        <button className={styles.submit} onClick={editHandler}>
+          ویرایش آگهی
+        </button>
       ) : (
         <button className={styles.submit} onClick={submitHandler}>
           ثبت آگهی
