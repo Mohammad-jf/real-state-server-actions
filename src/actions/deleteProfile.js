@@ -4,11 +4,11 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
 import connectDB from "@/utils/connectDB";
+import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
-async function deleteProfile(context) {
+async function deleteProfile(id) {
   await connectDB();
-  const id = context.params.profileId;
   const session = await getServerSession(authOptions);
   if (!session || !session?.user) {
     return { error: "لطفا وارد حساب کاربری خود شوید" };

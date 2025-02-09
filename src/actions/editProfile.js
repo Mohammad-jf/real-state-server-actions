@@ -23,7 +23,6 @@ async function editProfile(profileData) {
     category,
   } = profileData;
 
-  console.log(_id);
   const session = await getServerSession(authOptions);
   if (!session || !session?.user) {
     return { error: "لطفا وارد حساب کاربری خود شوید" };

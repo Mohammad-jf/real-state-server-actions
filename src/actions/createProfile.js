@@ -9,11 +9,11 @@ import { revalidatePath } from "next/cache";
 
 async function createProfile(profileData) {
   const session = await getServerSession(authOptions);
-  
+
   if (!session || !session.user) {
     return { error: "لطفا وارد حساب خود شوید" };
   }
-  
+
   await connectDB();
 
   const {
