@@ -5,7 +5,7 @@ import { sp } from "@/utils/replacenumber";
 import Link from "next/link";
 import { BiLeftArrowAlt } from "react-icons/bi";
 
-const Card = ({ data: { category, title, location, price } }) => {
+const Card = ({ data: { category, title, location, price, _id } }) => {
   return (
     <div className={styles.container}>
       <div className={styles.icon}>{icons[category]}</div>
@@ -16,7 +16,7 @@ const Card = ({ data: { category, title, location, price } }) => {
       </p>
 
       <span>{sp(price) + " "} تومان</span>
-      <Link href="">
+      <Link href={`/buy-residential/${_id}`}>
         مشاهده آگهی
         <BiLeftArrowAlt />
       </Link>
