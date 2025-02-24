@@ -4,7 +4,7 @@ import Profile from "@/models/Profile";
 
 async function getProfiles() {
   await connectDB();
-  const profiles = await Profile.find().select("-userId");
+  const profiles = await Profile.find({ published: true }).select("-userId");
   if (profiles) {
     return { data: profiles };
   } else {
