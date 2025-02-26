@@ -20,6 +20,10 @@ async function publishProfile(id) {
     return { error: "کاربری با این نام وجود ندارد" };
   }
 
+  if (user.role !== "ADMIN") {
+    return { error: "دسترسی محدود" };
+  }
+
   const profile = await Profile.findOne({ _id: id });
   if (!user._id.equals(profile.userId)) {
     return { error: "دسترسی شما به این آگهی محدود شده است" };

@@ -5,10 +5,15 @@ import { redirect } from "next/navigation";
 import connectDB from "@/utils/connectDB";
 import User from "@/models/User";
 
+export const metadata = {
+  title: "املاک ایرانمهر | پنل کاربری",
+};
+
 const DashboardLayout = async ({ children }) => {
   const session = await getServerSession(authOptions);
   if (!session || !session?.user) redirect("/signin");
   await connectDB();
+
   const user = await User.findOne({ email: session?.user?.email });
   if (!user) {
     return <h3>مشکلی پیش آمده است</h3>;
